@@ -1,0 +1,19 @@
+apiVersion: datadoghq.com/v2alpha1
+kind: DatadogAgent
+metadata:
+  name: datadog
+spec:
+  global:
+    clusterName: gke-fui-dev-cl
+    site: us5.datadoghq.com
+    registry: registry.datadoghq.com
+    credentials:
+      apiSecret:
+        secretName: datadog-secret
+        keyName: api-key
+
+  features:
+    clusterChecks:
+      enabled: true
+    orchestratorExplorer:
+      enabled: false

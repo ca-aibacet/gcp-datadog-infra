@@ -1,0 +1,13 @@
+apiVersion: datadoghq.com/v2alpha1
+kind: DatadogAgent
+metadata:
+  name: datadog
+spec:
+  global:
+    clusterName: gke-fui-dev-cl
+    tags:
+      - env:prod
+      - project:fui
+      - region:cl
+      - platform:gke
+      - cluster_name:gke-fui-dev-cl

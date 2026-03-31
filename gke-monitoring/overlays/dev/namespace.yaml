@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: datadog-monitoring-dev
+  labels:
+    app.kubernetes.io/name: datadog-monitoring-dev
+    app.kubernetes.io/part-of: datadog
