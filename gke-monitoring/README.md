@@ -488,6 +488,7 @@ Check esperado
 Debes ver algo parecido a:
 
 datadogagent.datadoghq.com/datadog created
+
 17. Validar que el DatadogAgent fue creado
 
 Pega esto:
@@ -500,6 +501,7 @@ Primero lo verás en creación, luego terminará mostrando algo como:
 
 AGENT Running
 CLUSTER-AGENT Running
+
 18. Validar recursos creados por el Operator
 
 Pega esto:
@@ -522,6 +524,7 @@ Como hoy el clúster tiene 2 nodos, lo normal es ver:
 2 pods datadog-agent
 1 pod datadog-cluster-agent
 1 pod datadog-operator
+
 19. Esperar a que termine el rollout
 
 Pega esto:
@@ -534,6 +537,7 @@ kubectl rollout status daemonset -n datadog-monitoring-dev $(kubectl get ds -n d
 Resultado esperado
 Deployments Available
 DaemonSet con rollout exitoso
+
 20. Validar consumo y eventos
 
 Pega esto:
@@ -544,6 +548,7 @@ Resultado esperado
 Pods Running
 Sin CrashLoopBackOff
 Sin errores críticos persistentes
+
 21. Validación final
 
 Pega esto:
@@ -557,6 +562,7 @@ DatadogAgent = Running
 datadog-agent DaemonSet = 2/2
 datadog-cluster-agent = 1/1
 datadog-operator = 1/1
+
 22. Estado real observado en esta implementación
 
 Se validó:
@@ -570,6 +576,7 @@ datadog-agent -> entre ~53m y ~180m CPU, ~135Mi a ~143Mi RAM
 datadog-cluster-agent -> ~11m CPU, ~94Mi RAM
 datadog-operator -> ~2m CPU, ~52Mi RAM
 23. Troubleshooting básico
+
 Caso 1: SecretSync no existe
 
 Síntoma:
@@ -595,6 +602,7 @@ gcloud beta container clusters update "$CLUSTER_NAME" \
 Luego validar:
 
 kubectl api-resources | grep -i secretsync || true
+
 Caso 2: el secret no aparece en Kubernetes
 
 Qué revisar:
@@ -608,12 +616,14 @@ IAM del secreto en Secret Manager
 namespace correcto
 service account correcta
 secret provider class correcto
+
 Caso 3: Helm no existe
 
 Instalar:
 
 sudo snap install helm --classic
 helm version
+
 Caso 4: DatadogAgent no levanta
 
 Revisar:
@@ -622,6 +632,7 @@ kubectl describe datadogagent datadog -n datadog-monitoring-dev
 kubectl get pods -n datadog-monitoring-dev -o wide
 kubectl get events -n datadog-monitoring-dev --sort-by=.metadata.creationTimestamp | tail -50
 kubectl logs deployment/datadog-operator -n datadog-monitoring-dev --tail=200
+
 Caso 5: aparece un warning de NEG en eventos
 
 En la implementación actual aparecieron warnings tipo:
@@ -676,6 +687,7 @@ crear secreto específico del ambiente
 crear IAM binding específico del ambiente
 crear namespace específico del ambiente
 desplegar Datadog en ese clúster
+
 26. Importante sobre tags
 
 Como hoy el mismo clúster contiene dev, qa y prod, no conviene dejar env:dev como tag global del Agent.
