@@ -6,8 +6,11 @@ spec:
   global:
     clusterName: gke-fui-dev-cl
     tags:
-      - env:dev
       - project:fui
       - region:cl
       - platform:gke
       - cluster_name:gke-fui-dev-cl
+
+  features:
+    orchestratorExplorer:
+      enabled: true
