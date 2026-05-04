@@ -14,3 +14,13 @@ spec:
   features:
     orchestratorExplorer:
       enabled: true
+
+    apm:
+      enabled: true
+      hostPortConfig:
+        enabled: true
+        hostPort: 8126
+
+    admissionController:
+      enabled: true
+      mutateUnlabelled: false
