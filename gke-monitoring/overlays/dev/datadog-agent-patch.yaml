@@ -30,7 +30,7 @@ spec:
           - qa
           - prod
         libVersions:
-          python: latest
+          python: "v4"   # fijado al major (antes: latest). ddtrace 4.x; evita saltos a v5 no controlados.
 
     admissionController:
       enabled: true
