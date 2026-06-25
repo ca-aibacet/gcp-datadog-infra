@@ -20,6 +20,17 @@ spec:
       hostPortConfig:
         enabled: true
         hostPort: 8126
+      # Single Step Instrumentation (SSI): el cluster-agent inyecta automaticamente
+      # el trazador en los pods con label admission.datadoghq.com/enabled=true.
+      # Solo Python (backends FUI) y solo en los namespaces de apps dev/qa/prod.
+      instrumentation:
+        enabled: true
+        enabledNamespaces:
+          - dev
+          - qa
+          - prod
+        libVersions:
+          python: latest
 
     admissionController:
       enabled: true
