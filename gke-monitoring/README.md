@@ -21,6 +21,29 @@ Este documento está escrito **paso a paso para dummies**, con:
 
 ---
 
+# 0. Estado actual (actualizado 2026-06-25)
+
+> **IMPORTANTE:** esta sección refleja lo que está REALMENTE aplicado hoy. Varias secciones
+> de más abajo describen la instalación mínima inicial ("Fase 1") y **quedaron
+> desactualizadas**. La fuente de verdad son los archivos YAML de `base/` y `overlays/dev/`.
+
+Aplicado en el cluster `gke-fui-dev-cl` (operador en namespace `datadog-monitoring-dev`):
+
+- `clusterChecks: true`
+- `orchestratorExplorer: true` (overlay dev)
+- **APM activado** (`apm.enabled: true`, hostPort 8126)
+- **Admission Controller activado** (`admissionController.enabled: true`, `mutateUnlabelled: false`
+  → solo inyecta a pods con el label `admission.datadoghq.com/enabled: "true"`)
+- **APM Single Step Instrumentation (SSI) activado**: `apm.instrumentation.enabled: true`,
+  `enabledNamespaces: [dev, qa, prod]`, `libVersions: { python: latest }`
+  - El cluster-agent inyecta automáticamente el trazador de Datadog (Python) en los pods de
+    backend etiquetados, en los 3 namespaces de apps (dev/qa/prod del mismo cluster).
+  - Estado verificado: 29/29 pods de backend instrumentados; trazas llegando a Datadog (APM).
+
+Para aplicar / actualizar el operador:
+
+    kubectl apply -k gke-monitoring/overlays/dev
+
 # 1. Contexto actual
 
 ## Clúster actual
@@ -63,6 +86,10 @@ Y luego:
 ---
 
 # 3. Qué se decidió activar y qué no
+
+> NOTA (2026-06-25): esta sección quedó desactualizada. Ver "# 0. Estado actual" arriba:
+> hoy APM, Admission Controller y SSI (Python) están activados. Lo de abajo era el plan
+> inicial mínimo.
 
 ## Fase 1: instalación mínima
 
@@ -649,6 +676,9 @@ Cluster Agent Running
 eso se considera un warning transitorio y no necesariamente un error bloqueante.
 
 24. Qué no se debe hacer ahora
+
+> NOTA (2026-06-25): APM, Admission Controller y SSI YA fueron activados (ver "# 0. Estado
+> actual"). La lista de abajo corresponde al plan inicial y ya NO aplica para APM.
 
 No activar todavía:
 
